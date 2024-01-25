@@ -6,7 +6,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
-
+3.2.2
 * System dependencies
 
 * Configuration
@@ -22,3 +22,11 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Run a project created with this template
+
+* make build
+* make up
+* make devshell
+
+* bundle exec rails server -b 0.0.0.0 -p 3000
