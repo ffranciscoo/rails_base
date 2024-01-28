@@ -1,0 +1,28 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/ping":
+    get:
+      summary: Ping
+      tags:
+      - Ping
+      responses:
+        '200':
+          description: pong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost

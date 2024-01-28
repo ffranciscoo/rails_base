@@ -30,3 +30,5 @@ Things you may want to cover:
 * make devshell
 
 * bundle exec rails server -b 0.0.0.0 -p 3000
+
+

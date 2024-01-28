@@ -43,5 +43,18 @@ psql:
 		pg_db \
 		psql -h pg_db -U admin rails_base_development
 
+rspec:
+	@docker compose run \
+		--env RAILS_ENV=test \
+		--entrypoint "bundle exec rspec" \
+		$(SERVICE)
+
+rswag:
+	@docker compose run \
+		--rm \
+		--env RAILS_ENV=development \
+		--entrypoint "bundle exec rails rswag" \
+		$(SERVICE)
+
 up:
 	@docker compose up
