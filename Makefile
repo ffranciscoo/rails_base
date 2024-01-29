@@ -7,8 +7,10 @@ help:
 	@echo " make build                                      # Build the containers"
 	@echo " make down                                       # Stop the containers"
 	@echo " make help                                       # Show this help"
-	@echo " make [SERVICE=<rails_base>] devshell         # Start a shell the container"
+	@echo " make [SERVICE=<rails_base>] devshell            # Start a shell the container"
 	@echo " make psql                                       # Start a psql shell"
+	@echo " make rspec                                      # Run rspec tests"
+	@echo " make rswag                                      # Run tests and generate swagger documentation"
 	@echo " make up                                         # Start the containers"
 	@echo ""
 	@echo "------------------------------------------------------------------------------"
@@ -19,13 +21,6 @@ endif
 
 build:
 	@docker compose build
-
-db-create:
-	@docker compose run \
-		--rm \
-		--env RAILS_ENV=development \
-		--entrypoint "bundle exec rake db:create" \
-		$(SERVICE)
 
 devshell:
 	@docker compose run \
