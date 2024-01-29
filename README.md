@@ -12,10 +12,14 @@ This is using:
 
 ## Configuration
 
-1. As optional, modify the following line to change the database name in the `config/database.yml` file by environment:
+- As optional, modify the following line to change the database name in the `config/database.yml` file by environment:
 ``` yaml
   database: rails_base...
 ```
+
+## Credentials
+- In folder `envs` set the credentials for postgres
+- In file `.env` set the host for swagger
 
 ## Set up & Run
 - Inside the projec folder:
