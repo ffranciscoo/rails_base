@@ -1,55 +1,66 @@
-all: help
+.DEFAULT_GOAL := help
+.PHONY: help
 
 help:
-	@echo ""
-	@echo "--[HELP]----------------------------------------------------------------------"
-	@echo ""
-	@echo " make build                                      # Build the containers"
-	@echo " make down                                       # Stop the containers"
-	@echo " make help                                       # Show this help"
-	@echo " make [SERVICE=<rails_base>] devshell            # Start a shell the container"
-	@echo " make psql                                       # Start a psql shell"
-	@echo " make rspec                                      # Run rspec tests"
-	@echo " make rswag                                      # Run tests and generate swagger documentation"
-	@echo " make up                                         # Start the containers"
-	@echo ""
-	@echo "------------------------------------------------------------------------------"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 ifndef SERVICE
 SERVICE=rails_base
 endif
 
-build:
+######### Docker compose commands #########
+build: ## Build the containers
 	@docker compose build
 
-devshell:
+up: ## Start the containers
+	@rm -f tmp/pids/server.pid
+	@docker compose up
+
+stop: ## Stop the containers
+	@docker compose stop
+
+down: ## Remove the containers
+	@docker compose down
+
+######### Rails app commands (development and test modes) #########
+console: ## Rails console on development mode
+	@docker compose run \
+		--rm \
+		--env RAILS_ENV=development \
+		--entrypoint "bundle exec rails console" \
+		$(SERVICE)
+
+check: ## Run checks (checks must be clean) development mode
+	@docker compose run \
+	  --rm \
+		--env RAILS_ENV=development \
+		--entrypoint "bundle exec rubocop" \
+		$(SERVICE)
+
+dev: ## Shell for Rails only on development mode
 	@docker compose run \
 		--env RAILS_ENV=development \
 		--entrypoint bash \
 		--rm \
-		--service-ports $(SERVICE)
+		--service-ports \
+		$(SERVICE)
 
-down:
-	@docker compose down
-
-psql:
+psql: ## Postgresql console development mode
 	@docker compose run \
 		--env PGPASSWORD=admin \
-		pg_db \
-		psql -h pg_db -U admin rails_base_development
+		postgres_db \
+		psql -h postgres_db -U admin rails_base_development
 
-rspec:
+rspec: ## Rspec in test mode
 	@docker compose run \
 		--env RAILS_ENV=test \
 		--entrypoint "bundle exec rspec" \
 		$(SERVICE)
 
-rswag:
+rswag: ## Swagger documentation with rspec in development mode
 	@docker compose run \
 		--rm \
 		--env RAILS_ENV=development \
 		--entrypoint "bundle exec rails rswag" \
 		$(SERVICE)
 
-up:
-	@docker compose up

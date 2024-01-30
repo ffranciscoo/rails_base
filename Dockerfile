@@ -1,4 +1,7 @@
-FROM ruby:3.2.2
+ARG RUBY_VERSION=3.2.2
+ARG BUILD_ENV
+
+FROM ruby:$RUBY_VERSION AS base
 
 RUN gem install bundler
 
@@ -11,4 +14,13 @@ RUN apt update && \
 
 RUN bundle install
 
+# Required to run bin/rails edit:credentials
+ENV EDITOR=vim
+
 ENTRYPOINT ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+
+FROM base AS development
+
+FROM base AS production
+
+FROM ${BUILD_ENV} AS final

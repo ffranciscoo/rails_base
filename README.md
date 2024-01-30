@@ -19,14 +19,14 @@ This is using:
 
 ## Credentials
 - In folder `envs` set the credentials for postgres
-- In file `.env` set the host for swagger
+- In file `.env` set the host for swagger, docker and rails environments
 
 ## Set up & Run
 - Inside the projec folder:
 - You can run `make` or `make help` to see all the options.
 
 1. Run `make build`
-1. For development mode, It´s necessary to enter in the container with the next command `make devshell`
+1. For development mode, It´s necessary to enter in the container with the next command `make dev`
 1. Inside the container run the command for create the database: `bundle exec rake db:setup`
 1. Run the app `bundle exec rails server -b 0.0.0.0 -p 3000`
 1. You can now try your REST services! visiting http://localhost/api/v1/ping 
@@ -36,7 +36,8 @@ This is using:
 - [Annotate](https://github.com/ctran/annotate_models) for doc the schema in the classes
 - [Byebug](https://github.com/deivid-rodriguez/byebug) for debugging
 - [Factory Bot](https://github.com/thoughtbot/factory_bot) for testing data
-- [Faker](https://github.com/stympy/faker) for generating test data
+- [Ffaker](https://github.com/ffaker/ffaker) for generating test data
 - [Jbuilder](https://github.com/rails/jbuilder) for json views
 - [Rubocop](https://github.com/bbatsov/rubocop/) for ruby linting
 - [Rswag](https://github.com/rswag/rswag) for document endpoints and rspec integrated
+- [Simplecov](https://github.com/simplecov-ruby/simplecov) for code coverage

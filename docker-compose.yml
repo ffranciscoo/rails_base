@@ -7,10 +7,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - BUILD_ENV=${BUILD_ENV}
     depends_on:
       - postgres_db
       - redis_db
     environment:
+      - RAILS_ENV=${RAILS_ENV}
       - SWAGGER_HOST=${SWAGGER_HOST}
     env_file:
       - ./envs/postgres.env
