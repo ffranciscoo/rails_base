@@ -21,6 +21,10 @@ ENTRYPOINT ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 
 FROM base AS development
 
+ENV ENV_NAME=AS_DEV
+
 FROM base AS production
+
+ENV ENV_NAME=AS_PROD
 
 FROM ${BUILD_ENV} AS final

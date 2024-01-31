@@ -37,6 +37,13 @@ check: ## Run checks (checks must be clean) development mode
 		--entrypoint "bundle exec rubocop" \
 		$(SERVICE)
 
+check-a: ## Run checks and autocorrectable (checks must be clean) development mode
+	@docker compose run \
+	  --rm \
+		--env RAILS_ENV=development \
+		--entrypoint "bundle exec rubocop -A" \
+		$(SERVICE)
+
 dev: ## Shell for Rails only on development mode
 	@docker compose run \
 		--env RAILS_ENV=development \
